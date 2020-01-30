@@ -20,10 +20,11 @@ import javafx.util.Callback;
 import java.util.Arrays;
 
 public class Main extends Application {
-
+    private int BOARD_WIDTH = 12;
+    private int BOARD_HEIGHT = 12;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Board mineBoard = new Board(); //TODO: change to non-default size
+        Board mineBoard = new Board(BOARD_WIDTH, BOARD_HEIGHT); //TODO: change to non-default size
         ObservableList<String[]> data = FXCollections.observableArrayList();
         data.addAll(Arrays.asList(mineBoard.mines));
         TableView<String[]> mineTable = new TableView<>();
@@ -43,11 +44,11 @@ public class Main extends Application {
         }
         mineTable.setItems(data);
 
-        TableView<Pixel[]> solveTable = new TableView<>();
+        TableView<String[]> solveTable = new TableView<>();
         mineTable.setEditable(true);
 // TODO: use these symbols for covered & flagged: "☐""☒"
 
-
+        Solver solver = new Solver(BOARD_WIDTH,BOARD_HEIGHT);
 
 
 
