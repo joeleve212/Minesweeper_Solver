@@ -44,11 +44,8 @@ public class Main extends Application {
         }
         mineTable.setItems(data);
 
-        TableView<String[]> solveTable = new TableView<>();
-        mineTable.setEditable(true);
-// TODO: use these symbols for covered & flagged: "☐""☒"
-
         Solver solver = new Solver(BOARD_WIDTH,BOARD_HEIGHT);
+        TableView<String[]> solveTable = displaySolve(solver);
 
 
 
@@ -70,6 +67,42 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public TableView<String[]> displaySolve(Solver currSolve){
+        // TODO: use these symbols for covered & flagged: "☐""☒"
+        String[][] grid = new String[BOARD_WIDTH][BOARD_HEIGHT];
+        for(int i = 0;i<BOARD_WIDTH;i++){
+            for(int j = 0;j<BOARD_HEIGHT;j++){
+                Pixel thisPix = currSolve.gameBoard[i][j];
+                if(thisPix.num>=0){
+                    grid[i][j] = Integer.toString(thisPix.num);
+                } else if(thisPix.flag) {
+                    grid[i][j] = "☒";
+                } else{
+                    grid[i][j] = "☐";
+                }
+            }
+        }
+
+        ObservableList<String[]> data = FXCollections.observableArrayList();
+        data.addAll(Arrays.asList(grid));
+        TableView<String[]> table = new TableView<>();
+
+        table.setEditable(true);
+        for (int i = 0; i < grid[0].length; i++) {
+            TableColumn tc = new TableColumn(grid[0][i]);
+            final int colNo = i;
+            tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
+                    return new SimpleStringProperty((p.getValue()[colNo]));
+                }
+            });
+            tc.setPrefWidth(90);
+            table.getColumns().add(tc);
+        }
+        table.setItems(data);
+        return table;
+    }
 
     public static void main(String[] args) {
         launch(args);
