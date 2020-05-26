@@ -3,7 +3,7 @@ package sample;
 import java.util.Arrays;
 
 public class Board {
-    public double percOfMines = .2;
+    public double percOfMines = .2; //
     public int width, height, numMines;
     public String[][] mines;
     Board(){
@@ -23,12 +23,18 @@ public class Board {
 
     void fillBoard(){
         for(int i = 0;i<width;i++){
-            Arrays.fill(mines[i], "F");
+            Arrays.fill(mines[i], "O");
         }
 
         //randomize mine locations
         for(int i = 0; i<numMines;i++){
-            mines[(int)(Math.random()*width)][(int)(Math.random()*height)] = "T";
+            int randX =(int)(Math.random()*width);
+            int randY =(int)(Math.random()*height);
+            if(mines[randX][randY] != "X") { //make sure random loc is not already a mine
+                mines[randX][randY] = "X";
+            } else{
+                i--; //decrement i so that loop continues an extra time
+            }
         }
     }
 }

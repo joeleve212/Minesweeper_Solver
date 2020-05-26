@@ -22,6 +22,7 @@ import java.util.Arrays;
 public class Main extends Application {
     private int BOARD_WIDTH = 12;
     private int BOARD_HEIGHT = 12;
+    private int colWidth = 40;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Board mineBoard = new Board(BOARD_WIDTH, BOARD_HEIGHT); //TODO: change to non-default size
@@ -39,7 +40,7 @@ public class Main extends Application {
                     return new SimpleStringProperty((p.getValue()[colNo]));
                 }
             });
-            tc.setPrefWidth(90);
+            tc.setPrefWidth(colWidth);
             mineTable.getColumns().add(tc);
         }
         mineTable.setItems(data);
@@ -97,7 +98,7 @@ public class Main extends Application {
                     return new SimpleStringProperty((p.getValue()[colNo]));
                 }
             });
-            tc.setPrefWidth(90);
+            tc.setPrefWidth(colWidth);
             table.getColumns().add(tc);
         }
         table.setItems(data);
